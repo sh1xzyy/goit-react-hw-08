@@ -1,0 +1,68 @@
+@import 'modern-normalize/modern-normalize.css';
+@import 'izitoast/dist/css/iziToast.min.css';
+
+body {
+	font-family: 'Poppins', sans-serif;
+	color: #2d2d2d;
+	background-color: #f5f7fa;
+}
+
+html,
+body {
+	width: 100%;
+	overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+	margin: 0;
+}
+
+ul,
+ol {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+address {
+	font-style: normal;
+}
+
+button {
+	cursor: pointer;
+}
+
+img {
+	display: block;
+}
+
+.container {
+	max-width: 1168px;
+	padding: 0 16px;
+	margin: 0 auto;
+}
+
+.iziToast > .iziToast-close {
+	opacity: 0.8;
+	background: url('/img/bi_x-lg.svg') no-repeat 50% 50%;
+	background-size: 16px;
+}
+
+.loaderWrapper {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1000;
+}

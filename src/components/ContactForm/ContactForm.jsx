@@ -4,9 +4,9 @@ import s from './ContactForm.module.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { addContact } from '../../redux/contacts/operations'
 import FormField from '../FormField/FormField'
-import { HashLoader } from 'react-spinners'
 import { selectIsLoading } from '../../redux/auth/selectors'
-import { showErrorMessage, showSuccessMessage } from '../../message/message'
+import Loader from '../Loader/Loader'
+import toast from 'react-hot-toast'
 
 const ContactForm = () => {
 	const dispatch = useDispatch()
@@ -26,10 +26,10 @@ const ContactForm = () => {
 	const onFormSubmit = async (value, actions) => {
 		try {
 			const response = await dispatch(addContact(value)).unwrap()
-			showSuccessMessage('Something went wrong!')
+			toast.success('Something went wrong!')
 			return response.data
 		} catch (error) {
-			showErrorMessage('Something went wrong!')
+			toast.error('Something went wrong!')
 		} finally {
 			actions.resetForm()
 		}
@@ -42,11 +42,7 @@ const ContactForm = () => {
 
 	return (
 		<>
-			{isLoading && (
-				<div className='loaderWrapper'>
-					<HashLoader color='#36d7b7' size={24} />
-				</div>
-			)}
+			{isLoading && <Loader />}
 			<div className={s.formWrapper}>
 				<Formik
 					initialValues={initialValues}

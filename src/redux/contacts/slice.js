@@ -1,12 +1,29 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit'
-import { addContact, deleteContact, fetchContacts } from './operations'
+import {
+	addContact,
+	deleteContact,
+	editContact,
+	fetchContacts,
+} from './operations'
+
+const initialState = {
+	items: [],
+	loading: false,
+	error: null,
+	currentContact: null,
+	modalType: null,
+}
 
 const contactsSlice = createSlice({
 	name: 'contacts',
-	initialState: {
-		items: [],
-		loading: false,
-		error: null,
+	initialState,
+	reducers: {
+		setCurrentContact: (state, action) => {
+			state.currentContact = action.payload
+		},
+		setModalType: (state, action) => {
+			state.modalType = action.payload
+		},
 	},
 	extraReducers: builder => {
 		builder
@@ -25,28 +42,38 @@ const contactsSlice = createSlice({
 				state.error = null
 				state.items = state.items.filter(item => item.id !== action.payload.id)
 			})
+			.addCase(editContact.fulfilled, (state, { payload }) => {
+				state.loading = false
+				state.error = null
+				state.items = state.items.map(item =>
+					item.id === payload.id ? payload : item
+				)
+			})
+			.addMatcher(
+				isAnyOf(
+					deleteContact.pending,
+					addContact.pending,
+					fetchContacts.pending,
+					editContact.pending
+				),
+				state => {
+					state.loading = true
+				}
+			)
 			.addMatcher(
 				isAnyOf(
 					deleteContact.rejected,
 					addContact.rejected,
-					fetchContacts.rejected
+					fetchContacts.rejected,
+					editContact.rejected
 				),
 				(state, action) => {
 					state.loading = false
 					state.error = action.payload
 				}
 			)
-			.addMatcher(
-				isAnyOf(
-					deleteContact.pending,
-					addContact.pending,
-					fetchContacts.pending
-				),
-				state => {
-					state.loading = true
-				}
-			)
 	},
 })
 
 export default contactsSlice.reducer
+export const { setCurrentContact, setModalType } = contactsSlice.actions

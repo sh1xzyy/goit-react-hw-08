@@ -1,5 +1,4 @@
 @import 'modern-normalize/modern-normalize.css';
-@import 'izitoast/dist/css/iziToast.min.css';
 
 body {
 	font-family: 'Poppins', sans-serif;
@@ -57,12 +56,4 @@ img {
 	opacity: 0.8;
 	background: url('/img/bi_x-lg.svg') no-repeat 50% 50%;
 	background-size: 16px;
-}
-
-.loaderWrapper {
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	z-index: 1000;
 }

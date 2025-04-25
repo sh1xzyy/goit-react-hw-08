@@ -25,6 +25,13 @@
 	border-radius: 4px;
 	color: aliceblue;
 	background-color: #4f46e5;
+	transition: background-color 250ms linear;
+	&:hover {
+		background-color: #4338ca;
+	}
+	&:active {
+		background-color: #3730a3;
+	}
 }
 
 .navLink {

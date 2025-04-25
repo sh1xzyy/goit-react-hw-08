@@ -29,6 +29,10 @@ export const login = createAsyncThunk('auth/login', async (data, thunkAPI) => {
 export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
 	try {
 		const token = thunkAPI.getState().auth.token
+		if (!token) {
+			return thunkAPI.rejectWithValue('No token available')
+		}
+
 		const response = await authInstance.post('/users/logout', null, {
 			headers: { Authorization: `Bearer ${token}` },
 		})
@@ -38,12 +42,17 @@ export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
 	}
 })
 
-export const userInfo = createAsyncThunk(
-	'auth/userInfo',
+export const refreshUser = createAsyncThunk(
+	'auth/refresh',
 	async (_, thunkAPI) => {
 		try {
 			const token = thunkAPI.getState().auth.token
-			const response = await authInstance.get('/users/current', null, {
+
+			if (!token) {
+				return thunkAPI.rejectWithValue('No valid token')
+			}
+
+			const response = await authInstance.get('/users/current', {
 				headers: { Authorization: `Bearer ${token}` },
 			})
 			return response.data

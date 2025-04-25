@@ -1,11 +1,19 @@
+import { useEffect, useState } from 'react'
 import ContactForm from '../../components/ContactForm/ContactForm'
 import ContactList from '../../components/ContactList/ContactList'
 import Container from '../../components/Container/Container'
 import SearchBox from '../../components/SearchBox/SearchBox'
 import Section from '../../components/Section/Section'
 import s from './TasksPage.module.css'
+import { useDispatch } from 'react-redux'
+import { fetchContacts } from '../../redux/contacts/operations'
 
 const TasksPage = () => {
+	const dispatch = useDispatch()
+
+	useEffect(() => {
+		dispatch(fetchContacts())
+	}, [dispatch])
 	return (
 		<>
 			<Section>

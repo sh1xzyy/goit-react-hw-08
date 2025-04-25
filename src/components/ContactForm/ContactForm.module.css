@@ -29,10 +29,6 @@
 		&:active {
 			background-color: #3730a3;
 		}
-		&:disabled {
-			cursor: not-allowed;
-			background-color: #9ca3af;
-		}
 	}
 
 	.fields {

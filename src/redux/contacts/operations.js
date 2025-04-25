@@ -1,13 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import axios from 'axios'
-
-axios.defaults.baseURL = 'https://68067e0ce81df7060eb757ba.mockapi.io'
+import { authInstance } from '../auth/operations'
 
 export const fetchContacts = createAsyncThunk(
 	'contacts/fetchAll',
 	async (_, thunkAPI) => {
 		try {
-			const response = await axios.get('/contacts')
+			const token = thunkAPI.getState().auth.token
+			const response = await authInstance.get('/contacts', {
+				headers: { Authorization: `Bearer ${token}` },
+			})
 			return response.data
 		} catch (error) {
 			thunkAPI.rejectWithValue(error)
@@ -17,9 +18,12 @@ export const fetchContacts = createAsyncThunk(
 
 export const addContact = createAsyncThunk(
 	'contacts/addContact',
-	async (value, thunkAPI) => {
+	async (body, thunkAPI) => {
 		try {
-			const response = await axios.post('/contacts', value)
+			const token = thunkAPI.getState().auth.token
+			const response = await authInstance.post('/contacts', body, {
+				headers: { Authorization: `Bearer ${token}` },
+			})
 			return response.data
 		} catch (error) {
 			thunkAPI.rejectWithValue(error)
@@ -31,7 +35,25 @@ export const deleteContact = createAsyncThunk(
 	'contacts/deleteContact',
 	async (id, thunkAPI) => {
 		try {
-			const response = await axios.delete(`/contacts/${id}`)
+			const token = thunkAPI.getState().auth.token
+			const response = await authInstance.delete(`/contacts/${id}`, {
+				headers: { Authorization: `Bearer ${token}` },
+			})
+			return response.data
+		} catch (error) {
+			thunkAPI.rejectWithValue(error)
+		}
+	}
+)
+
+export const editContact = createAsyncThunk(
+	'contacts/editContact',
+	async ({ id, ...body }, thunkAPI) => {
+		try {
+			const token = thunkAPI.getState().auth.token
+			const response = await authInstance.patch(`/contacts/${id}`, body, {
+				headers: { Authorization: `Bearer ${token}` },
+			})
 			return response.data
 		} catch (error) {
 			thunkAPI.rejectWithValue(error)

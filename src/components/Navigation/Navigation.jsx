@@ -8,8 +8,8 @@ import {
 	selectIsLoggedIn,
 	selectUserInfo,
 } from '../../redux/auth/selectors'
-import { HashLoader } from 'react-spinners'
-import { showErrorMessage, showSuccessMessage } from '../../message/message'
+import Loader from '../Loader/Loader'
+import toast from 'react-hot-toast'
 
 const Navigation = () => {
 	const dispatch = useDispatch()
@@ -21,20 +21,16 @@ const Navigation = () => {
 	const onLogoutClick = async () => {
 		try {
 			const response = await dispatch(logout()).unwrap()
-			showSuccessMessage('You have successfully logged out!')
+			toast.success('You have successfully logged out!')
 			return response.data
 		} catch (error) {
-			showErrorMessage('Something went wrong!')
+			toast.error('Something went wrong!')
 		}
 	}
 
 	return (
 		<>
-			{isLoading && (
-				<div className='loaderWrapper'>
-					<HashLoader color='#36d7b7' size={24} />
-				</div>
-			)}
+			{isLoading && <Loader />}
 			<nav className={s.headerNav}>
 				<NavLink className={({ isActive }) => isLinkActive(isActive)} to='/'>
 					Home

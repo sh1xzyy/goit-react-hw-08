@@ -4,13 +4,15 @@ import s from './LoginForm.module.css'
 import * as Yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../../redux/auth/operations'
-import { showSuccessMessage, showWarningMessage } from '../../message/message'
-import { selectIsLoading } from '../../redux/auth/selectors'
-import { HashLoader } from 'react-spinners'
+import { selectIsLoading, selectIsLoggedIn } from '../../redux/auth/selectors'
+import { Navigate } from 'react-router-dom'
+import Loader from '../Loader/Loader'
+import toast, { Toaster } from 'react-hot-toast'
 
 const LoginForm = () => {
 	const dispatch = useDispatch()
 	const isLoading = useSelector(selectIsLoading)
+	const isLoggedIn = useSelector(selectIsLoggedIn)
 
 	const validationSchema = Yup.object().shape({
 		email: Yup.string()
@@ -26,12 +28,16 @@ const LoginForm = () => {
 	const onFormSubmit = async (values, actions) => {
 		try {
 			await dispatch(login(values)).unwrap()
-			showSuccessMessage('You have successfully you have successfully logged!')
+			toast.success('You have successfully you have successfully logged!')
 		} catch (error) {
-			showWarningMessage('First you must register!')
+			toast.error('First you must register!')
 		} finally {
 			actions.resetForm()
 		}
+	}
+
+	if (isLoggedIn) {
+		return <Navigate to='/tasks' />
 	}
 
 	const initialValues = {
@@ -41,11 +47,7 @@ const LoginForm = () => {
 
 	return (
 		<>
-			{isLoading && (
-				<div className='loaderWrapper'>
-					<HashLoader color='#36d7b7' size={24} />
-				</div>
-			)}
+			{isLoading && <Loader />}
 			<div className={s.formWrapper}>
 				<Formik
 					initialValues={initialValues}

@@ -7,7 +7,7 @@ import { login } from '../../redux/auth/operations'
 import { selectIsLoading, selectIsLoggedIn } from '../../redux/auth/selectors'
 import { Navigate } from 'react-router-dom'
 import Loader from '../Loader/Loader'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 
 const LoginForm = () => {
 	const dispatch = useDispatch()
@@ -37,7 +37,7 @@ const LoginForm = () => {
 	}
 
 	if (isLoggedIn) {
-		return <Navigate to='/tasks' />
+		return <Navigate to='/contacts' />
 	}
 
 	const initialValues = {

@@ -5,6 +5,7 @@ import {
 	editContact,
 	fetchContacts,
 } from './operations'
+import { logout } from '../auth/operations'
 
 const initialState = {
 	items: [],
@@ -48,6 +49,9 @@ const contactsSlice = createSlice({
 				state.items = state.items.map(item =>
 					item.id === payload.id ? payload : item
 				)
+			})
+			.addCase(logout.fulfilled, state => {
+				state.items = []
 			})
 			.addMatcher(
 				isAnyOf(

@@ -1,5 +1,11 @@
 .userItem {
-	border: 1px solid #292929;
+	border: 1px solid #d3d3d3;
+}
+
+.userText {
+	font-weight: 400;
+	font-size: 18px;
+	color: #292929;
 }
 
 .userItemWrapper {

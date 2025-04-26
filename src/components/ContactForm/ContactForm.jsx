@@ -4,13 +4,13 @@ import s from './ContactForm.module.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { addContact } from '../../redux/contacts/operations'
 import FormField from '../FormField/FormField'
-import { selectIsLoading } from '../../redux/auth/selectors'
 import Loader from '../Loader/Loader'
 import toast from 'react-hot-toast'
+import { selectLoading } from '../../redux/contacts/selectors'
 
 const ContactForm = () => {
 	const dispatch = useDispatch()
-	const isLoading = useSelector(selectIsLoading)
+	const isLoading = useSelector(selectLoading)
 
 	const validationSchema = Yup.object({
 		name: Yup.string()
@@ -26,7 +26,7 @@ const ContactForm = () => {
 	const onFormSubmit = async (value, actions) => {
 		try {
 			const response = await dispatch(addContact(value)).unwrap()
-			toast.success('Something went wrong!')
+			toast.success('You have successfully added a contact!')
 			return response.data
 		} catch (error) {
 			toast.error('Something went wrong!')

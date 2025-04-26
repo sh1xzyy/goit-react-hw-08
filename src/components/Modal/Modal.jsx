@@ -14,15 +14,6 @@ const Modal = () => {
 		dispatch(setModalType(null))
 	}
 
-	// const handleWarningSubmit = async () => {
-	// 	try {
-	// 		await dispatch(deleteContact(contact.id)).unwrap()
-	// 		toast.success('The note has been successfully deleted.')
-	// 	} catch (error) {
-	// 		toast.error('Something went wrong!')
-	// 	}
-	// }
-
 	return (
 		<div className={s.modalOverlay}>
 			<div className={s.modal}>

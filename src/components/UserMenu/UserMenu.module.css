@@ -1,13 +1,7 @@
-.headerNav {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-}
-
 .authLinks {
 	display: flex;
 	align-items: center;
-	column-gap: 20px;
+	column-gap: 30px;
 }
 
 .userName {

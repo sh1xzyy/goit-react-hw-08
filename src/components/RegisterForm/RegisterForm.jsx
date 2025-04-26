@@ -48,7 +48,7 @@ const RegisterForm = () => {
 	}
 
 	if (isLoggedIn) {
-		return <Navigate to='/tasks' />
+		return <Navigate to='/contacts' />
 	}
 
 	const initialValues = {
